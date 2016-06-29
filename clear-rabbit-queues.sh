@@ -14,12 +14,12 @@ fi
 
 for Q in $(rabbitmqadmin list queues name | awk '{print $2}' | grep "^$PREFIX")
 do
-	echo -n "Deleting queue $Q..."
-	rabbitmqadmin delete queue name="$Q"
+	(echo "Deleting queue $Q..." && rabbitmqadmin delete queue name="$Q") &
 done
+wait
 
 for Q in $(rabbitmqadmin list exchanges name | awk '{print $2}' | grep "^$PREFIX")
 do
-	echo -n "Deleting exchange $Q..."
-	rabbitmqadmin delete exchange name="$Q"
+	(echo "Deleting exchange $Q..." && rabbitmqadmin delete exchange name="$Q") &
 done
+wait
